@@ -7,10 +7,13 @@ import com.azure.communication.email.models.EmailSendResult;
 import com.azure.communication.email.models.EmailSendStatus;
 import com.azure.communication.email.models.EmailMessage;
 import com.azure.core.util.polling.SyncPoller;
+import com.azure.identity.ClientSecretCredential;
+import com.azure.identity.ClientSecretCredentialBuilder;
+import com.azure.identity.DefaultAzureCredential;
+import com.azure.identity.DefaultAzureCredentialBuilder;
 import com.azure.core.http.policy.RetryPolicy;
 import com.azure.core.util.polling.LongRunningOperationStatus;
 import com.azure.core.util.polling.PollResponse;
-
 
 public class App 
 {
@@ -27,12 +30,23 @@ public class App
 
         //System.setProperty("javax.net.ssl.trustStoreType","Windows-ROOT");
 
-        String connectionString = "<ACS_CONNECTION_STRING>";
-        String senderAddress = "<SENDER_EMAIL_ADDRESS>";
-        String recipientAddress = "<RECIPIENT_EMAIL_ADDRESS>";
+        String connectionString = "endpoint=https://ebraheemacsus.communication.azure.com/;accesskey=dPHQy6c8EkgqOocLMZUlGJjq0knigExHhakHyoqlZDcOfIy1/mCFmhWG6OuBztxFv68LNRdKjjYpS3CybojWXQ==";
+        String endpoint = "https://ebraheemacsus.communication.azure.com";
+        String senderAddress = "DoNotReply@notification.ealmuneyeeraz.net";
+        String recipientAddress = "ealmuneyeer@microsoft.com";
+
+        DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder().build();
+
+        ClientSecretCredential secretCredential = new ClientSecretCredentialBuilder()
+                .tenantId("72f988bf-86f1-41af-91ab-2d7cd011db47")
+                .clientId("83918f85-56ba-4108-aa47-57a231fc694e")
+                .clientSecret("b-Y8Q~FTiKSFcs~FL9PYmN~kPdWta5CmUI2TvaD.")
+                .build();
 
         EmailClient client = new EmailClientBuilder()
-            .connectionString(connectionString)
+            .credential(defaultCredential)
+            .endpoint(endpoint)
+            //.connectionString(connectionString)
             .retryPolicy(new RetryPolicy(new CustomStrategy()))
             .buildClient();
 
@@ -45,7 +59,18 @@ public class App
 
         try
         {
-            SyncPoller<EmailSendResult, EmailSendResult> poller = client.beginSend(message, null);
+            SyncPoller<EmailSendResult, EmailSendResult> poller = null;
+            
+            try{
+                for(int i =0; i < 20; i++){
+                    poller = client.beginSend(message, null);
+                    System.out.println("Message sent" + i);
+                }
+            }catch(Exception ex){
+                    System.out.println("Exception occurred");
+            }
+
+            //SyncPoller<EmailSendResult, EmailSendResult> poller = client.beginSend(message, null);
 
             PollResponse<EmailSendResult> pollResponse = null;
 

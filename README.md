@@ -7,6 +7,8 @@ products:
 - azure-communication-email
 ---
 
+<h3>This sample has been biult depending on the official sample https://github.com/Azure-Samples/communication-services-java-quickstarts/tree/main/send-email</h3>
+<h4>It show how you can disable the auto-retry to send emails when you reach the throttling limits and recieve 429 error codes from the backend by extending the ExponentialBackoff class </h4>
 
 # Email Sample
 

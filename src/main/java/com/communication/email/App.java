@@ -30,17 +30,17 @@ public class App
 
         //System.setProperty("javax.net.ssl.trustStoreType","Windows-ROOT");
 
-        String connectionString = "endpoint=https://ebraheemacsus.communication.azure.com/;accesskey=dPHQy6c8EkgqOocLMZUlGJjq0knigExHhakHyoqlZDcOfIy1/mCFmhWG6OuBztxFv68LNRdKjjYpS3CybojWXQ==";
-        String endpoint = "https://ebraheemacsus.communication.azure.com";
-        String senderAddress = "DoNotReply@notification.ealmuneyeeraz.net";
-        String recipientAddress = "ealmuneyeer@microsoft.com";
+        String connectionString = "<ACS_CONNECTION_STRING>";
+        String senderAddress = "<SENDER_EMAIL_ADDRESS>";
+        String endpoint = "<REPLACE_WITH_ENDPOINT>";
+        String recipientAddress = "<RECIPIENT_EMAIL_ADDRESS>";
 
         DefaultAzureCredential defaultCredential = new DefaultAzureCredentialBuilder().build();
 
         ClientSecretCredential secretCredential = new ClientSecretCredentialBuilder()
-                .tenantId("72f988bf-86f1-41af-91ab-2d7cd011db47")
-                .clientId("83918f85-56ba-4108-aa47-57a231fc694e")
-                .clientSecret("b-Y8Q~FTiKSFcs~FL9PYmN~kPdWta5CmUI2TvaD.")
+                .tenantId("REPLACE_WITH_TENANT_ID")
+                .clientId("REPLACE_WITH_AAD_CLIENT_ID")
+                .clientSecret("REPLACE_WITH_AAD_CLIENT_SECRET")
                 .build();
 
         EmailClient client = new EmailClientBuilder()
